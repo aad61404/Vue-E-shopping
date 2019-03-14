@@ -23,6 +23,13 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: () => import('@/components/Home.vue'),
+      children: [
+        {
+          path: 'product_list',
+          name: 'ProductList',
+          component: () => import('@/components/pages/productList.vue'),
+        },
+      ],
     },
     {
       path: '/login',
