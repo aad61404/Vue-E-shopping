@@ -1,24 +1,12 @@
 <template>
-  <div class="Home">
-    <Navbar />
-    <h1>This is an Home page</h1>
-    <div class="container-fluid">
-      <div class="row">
-        <Sidebar />
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-          <router-view></router-view>
-        </main>
-      </div>
-    </div>
+  <div>
+    asasasd
+
+    <li class="nav-item">
+      <router-link class="nav-link" to="/customer_order">模擬訂單</router-link>
+    </li>
+    <li class="nav-item">
+      <router-link class="nav-link" to="/login">後台系統</router-link>
+    </li>
   </div>
 </template>
-<script>
-import Navbar from "./Navbar";
-import Sidebar from "./Sidebar";
-export default {
-  components: {
-    Navbar,
-    Sidebar
-  }
-};
-</script>
