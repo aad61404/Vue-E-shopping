@@ -43,7 +43,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../docs'),  // 之前是 '../dist'
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',    // 之前是 '/'
+    assetsPublicPath: '/Vue-E-shopping/',    // 之前是 '/'
 
     /**
      * Source Maps
