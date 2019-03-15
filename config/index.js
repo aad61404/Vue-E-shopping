@@ -43,7 +43,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../docs'),  // 之前是 '../dist'
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/vue_git_page/',    // 之前是 '/'
+    assetsPublicPath: '/',    // 之前是 '/'
 
     /**
      * Source Maps
