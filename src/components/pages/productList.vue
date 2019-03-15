@@ -1,35 +1,63 @@
 <template>
-    <div>
-    <div class="row mt-4">
-      <div class="col-md-4 mb-4" v-for="item in products" :key="item.id">
-        <div class="card border-0 shadow-sm">
-          <div style="height: 150px; background-size: 100% 100%; background-position: center" :style="{ backgroundImage: `url(${item.imageUrl})`}">
-          </div>
-          <div class="card-body">
-            <span class="badge badge-secondary float-right ml-2">{{ item.category }}</span>
-            <h5 class="card-title">
-              <a href="#" class="text-dark">{{ item.title }}</a>
-            </h5>
-            <p class="card-text">{{ item.content }}</p>
-            <div class="d-flex justify-content-between align-items-baseline">
-              <!-- <div class="h5">2,800 元</div> -->
-              <del class="h6">原價 {{ item.origin_price }} 元</del>
-              <div class="h5">現在只要 {{ item.price }} 元</div>
-            </div>
-          </div>
-          <div class="card-footer d-flex">
-            <button type="button" class="btn btn-outline-secondary btn-sm" @click="getProduct(item.id)">
-              <i class="fas fa-spinner fa-spin" v-if="status.loadingItem === item.id"></i>
-              查看更多
-            </button>
-            <button type="button" class="btn btn-outline-danger btn-sm ml-auto" @click="addToCart(item.id)">
-              <i class="fas fa-spinner fa-spin" v-if="status.loadingItem === item.id"></i>
-              加到購物車
+  <div>
+    
+    <div class="container">
+          <article>
+      <header>
+        <h1>給你活力滿滿的能量</h1>
+      </header>
+      <p>補充一天的元氣</p>
+    </article>
+
+      <div class="row">
+        <!-- left list start -->
+        <div class="col-lg-2 my-3 mb-3">
+          <div class="list-group">
+            <button type="button" class="list-group-item list-group-item-action" v-for="(item, idx) in filterStyleArr"
+              @click="changeFilterStyle(idx)" :key="item" :value="item">
+              {{item}}
             </button>
           </div>
         </div>
-      </div>
-    </div> <!-- row  end-->
+
+        <!-- left list end-->
+        <div class="col-md-10">
+          <div class="row">
+            <div class="col-lg-4 my-3" v-for="item in filterProductArr" :key="item.id">
+              <div class="card border-0 shadow-sm">
+                <div style="height: 150px; background-size: 100% 100%; background-position: center" :style="{ backgroundImage: `url(${item.imageUrl})`}">
+                </div>
+                <div class="card-body">
+                  <span class="badge badge-secondary float-right ml-2">{{ item.category }}</span>
+                  <h5 class="card-title">
+                    <a href="#" class="text-dark">{{ item.title }}</a>
+                  </h5>
+                  <p class="card-text">{{ item.content }}</p>
+                  <div class="d-flex justify-content-between align-items-baseline">
+                    <!-- <div class="h5">2,800 元</div> -->
+                    <del class="h6">原價 {{ item.origin_price }} 元</del>
+                    <div class="h5">現在只要 {{ item.price }} 元</div>
+                  </div>
+                </div>
+                <div class="card-footer d-flex">
+                  <button type="button" class="btn btn-outline-secondary btn-sm" @click="getProduct(item.id)">
+                    <i class="fas fa-spinner fa-spin" v-if="status.loadingItem === item.id"></i>
+                    查看更多
+                  </button>
+                  <button type="button" class="btn btn-outline-danger btn-sm ml-auto" @click="addToCart(item.id)">
+                    <i class="fas fa-spinner fa-spin" v-if="status.loadingItem === item.id"></i>
+                    加到購物車
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> <!-- mt-4  end-->
+
+      </div> <!-- row end -->
+
+    </div>
+
     <!-- 單筆 modal -->
     <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
@@ -70,7 +98,7 @@
       </div>
     </div>
     <!-- 單筆modal end  -->
-    </div>
+  </div>
 </template>
 
 <style scoped>
@@ -81,11 +109,12 @@
 </style>
 <script>
 import $ from "jquery";
-
+import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
-
+      currentFilterStyle: "全部商品",
+      filterStyleArr: ["全部商品", "飲品", "漢堡", "三明治"],
       products: [],
       isLoading: false,
       product: {},
@@ -104,6 +133,18 @@ export default {
       cart: {},
       coupon_code: ""
     };
+  },
+  computed: {
+    filterProductArr: function() {
+      if (this.currentFilterStyle === '全部商品') {
+        return this.products;
+      } else  {
+        return this.products.filter(item => {
+          console.log(item);
+          return item.category === this.currentFilterStyle ;
+        })
+      }
+    }
   },
   methods: {
     getProducts(page = 1) {
@@ -198,9 +239,9 @@ export default {
       // vm.isLoading = true;
       this.$validator.validate().then(result => {
         if (result) {
-          this.$http.post(api, { data: order }).then((response) => {
+          this.$http.post(api, { data: order }).then(response => {
             console.log("response:", response);
-          if (response.data.success) {
+            if (response.data.success) {
               vm.$router.push(`/customer_checkout/${response.data.orderId}`);
             }
             // vm.isLoading = false;
@@ -210,6 +251,9 @@ export default {
           console.log("欄位不完整:");
         }
       });
+    },
+    changeFilterStyle(idx) {
+      this.currentFilterStyle = this.filterStyleArr[idx];
     }
   },
   created() {
