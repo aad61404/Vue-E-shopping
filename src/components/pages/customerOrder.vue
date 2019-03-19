@@ -177,7 +177,9 @@ export default {
     return {
       products: [],
       isLoading: false,
-      product: {},
+      product: {
+        num: 1
+      },
       status: {
         loadingItem: ""
       },
@@ -208,15 +210,16 @@ export default {
         vm.isLoading = false;
       });
     },
-    getProduct(id) {
+    getProduct(id, num = 1) {
       // 單筆資料有prodcut 沒有s
-      const vm = this;
+      let vm = this;
       const api = `${process.env.APIPATH}/api/${
         process.env.CUSTOMERPATH
       }/product/${id}`;
       vm.status.loadingItem = id;
       this.$http.get(api).then(response => {
         vm.product = response.data.product;
+        // Object.assign(vm.product, {num: num});
         $("#productModal").modal("show");
         console.log("response:", response);
         vm.status.loadingItem = "";
@@ -287,9 +290,9 @@ export default {
       // vm.isLoading = true;
       this.$validator.validate().then(result => {
         if (result) {
-          this.$http.post(api, { data: order }).then((response) => {
+          this.$http.post(api, { data: order }).then(response => {
             console.log("response:", response);
-          if (response.data.success) {
+            if (response.data.success) {
               vm.$router.push(`/customer_checkout/${response.data.orderId}`);
             }
             // vm.isLoading = false;

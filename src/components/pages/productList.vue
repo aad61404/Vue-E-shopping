@@ -1,104 +1,169 @@
 <template>
   <div>
-    
-    <div class="container">
-          <article>
-      <header>
-        <h1>給你活力滿滿的能量</h1>
-      </header>
-      <p>補充一天的元氣</p>
-    </article>
+    <div>
+      <div class="container">
+        <article>
+          <header>
+            <h1>給你活力滿滿的能量</h1>
+          </header>
+          <p>補充一天的元氣</p>
+        </article>
 
-      <div class="row">
-        <!-- left list start -->
-        <div class="col-lg-2 my-3 mb-3">
-          <div class="list-group">
-            <button type="button" class="list-group-item list-group-item-action" v-for="(item, idx) in filterStyleArr"
-              @click="changeFilterStyle(idx)" :key="item" :value="item">
-              {{item}}
-            </button>
+        <div class="row">
+          <!-- left list start -->
+          <div class="col-lg-2 my-3 mb-3">
+            <div class="list-group">
+              <button type="button" class="list-group-item list-group-item-action" v-for="(item, idx) in filterStyleArr"
+                @click="changeFilterStyle(idx)" :key="item" :value="item">
+                {{item}}
+              </button>
+            </div>
           </div>
-        </div>
 
-        <!-- left list end-->
-        <div class="col-md-10">
-          <div class="row">
-            <div class="col-lg-4 my-3" v-for="item in filterProductArr" :key="item.id">
-              <div class="card border-0 shadow-sm">
-                <div style="height: 150px; background-size: 100% 100%; background-position: center" :style="{ backgroundImage: `url(${item.imageUrl})`}">
-                </div>
-                <div class="card-body">
-                  <span class="badge badge-secondary float-right ml-2">{{ item.category }}</span>
-                  <h5 class="card-title">
-                    <a href="#" class="text-dark">{{ item.title }}</a>
-                  </h5>
-                  <p class="card-text">{{ item.content }}</p>
-                  <div class="d-flex justify-content-between align-items-baseline">
-                    <!-- <div class="h5">2,800 元</div> -->
-                    <del class="h6">原價 {{ item.origin_price }} 元</del>
-                    <div class="h5">現在只要 {{ item.price }} 元</div>
+          <!-- left list end-->
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-lg-4 my-3" v-for="item in filterProductArr" :key="item.id">
+                <div class="card border-0 shadow-sm">
+                  <div style="height: 150px; background-size: 100% 100%; background-position: center" :style="{ backgroundImage: `url(${item.imageUrl})`}">
                   </div>
-                </div>
-                <div class="card-footer d-flex">
-                  <button type="button" class="btn btn-outline-secondary btn-sm" @click="getProduct(item.id)">
-                    <i class="fas fa-spinner fa-spin" v-if="status.loadingItem === item.id"></i>
-                    查看更多
-                  </button>
-                  <button type="button" class="btn btn-outline-danger btn-sm ml-auto" @click="addToCart(item.id)">
-                    <i class="fas fa-spinner fa-spin" v-if="status.loadingItem === item.id"></i>
-                    加到購物車
-                  </button>
+                  <div class="card-body">
+                    <span class="badge badge-secondary float-right ml-2">{{ item.category }}</span>
+                    <h5 class="card-title">
+                      <a href="#" class="text-dark">{{ item.title }}</a>
+                    </h5>
+                    <p class="card-text">{{ item.content }}</p>
+                    <div class="d-flex justify-content-between align-items-baseline">
+                      <!-- <div class="h5">2,800 元</div> -->
+                      <del class="h6">原價 {{ item.origin_price }} 元</del>
+                      <div class="h5">現在只要 {{ item.price }} 元</div>
+                    </div>
+                  </div>
+                  <div class="card-footer d-flex">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" @click="getProduct(item.id)">
+                      <i class="fas fa-spinner fa-spin" v-if="status.loadingItem === item.id"></i>
+                      查看更多
+                    </button>
+                    <button type="button" class="btn btn-outline-danger btn-sm ml-auto" @click="addToCart(item.id)">
+                      <i class="fas fa-spinner fa-spin" v-if="status.loadingItem === item.id"></i>
+                      加到購物車
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div> <!-- mt-4  end-->
+          </div> <!-- mt-4  end-->
 
-      </div> <!-- row end -->
+        </div> <!-- row end -->
 
-    </div>
+      </div>
 
-    <!-- 單筆 modal -->
-    <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">{{product.title}}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <img :src="product.imageUrl" class="img-fluid" alt>
-            <blockquote class="blockquote mt-3">
-              <p class="mb-0">{{product.content}}</p>
-              <footer class="blockquote-footer text-right">{{product.description}}</footer>
-            </blockquote>
-            <div class="d-flex justify-content-between align-items-baseline">
-              <div class="h5" v-if="!product.price">{{product.origin_price}} 元</div>
-              <del class="h6" v-if="product.price">原價{{product.origin_price}}元</del>
-              <div class="h5" v-if="product.price">現在只要{{product.price}}元</div>
+      <!-- 單筆 modal -->
+      <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">{{product.title}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
-            <select name class="form-control mt-3" v-model="product.num">
-              <option :value="num" v-for="num in 10" :key="num">選購{{ num }} {{ product.unit }}</option>
-            </select>
-          </div>
-          <div class="modal-footer">
-            <div class="text-muted text-nowrap mr-3">
-              小計
-              <strong>{{product.num*product.price}}</strong>
+            <div class="modal-body">
+              <img :src="product.imageUrl" class="img-fluid" alt>
+              <blockquote class="blockquote mt-3">
+                <p class="mb-0">{{product.content}}</p>
+                <footer class="blockquote-footer text-right">{{product.description}}</footer>
+              </blockquote>
+              <div class="d-flex justify-content-between align-items-baseline">
+                <div class="h5" v-if="!product.price">{{product.origin_price}} 元</div>
+                <del class="h6" v-if="product.price">原價{{product.origin_price}}元</del>
+                <div class="h5" v-if="product.price">現在只要{{product.price}}元</div>
+              </div>
+              <select name class="form-control mt-3" v-model="product.num">
+                <option :value="num" v-for="num in 10" :key="num">選購{{ num }} {{ product.unit }}</option>
+              </select>
             </div>
-            <button type="button" class="btn btn-primary" @click="addToCart(product.id, product.num)">
-              <i class="fas"></i>
-              加到購物車
-            </button>
+            <div class="modal-footer">
+              <div class="text-muted text-nowrap mr-3">
+                小計
+                <strong>{{product.num*product.price}}</strong>
+              </div>
+              <button type="button" class="btn btn-primary" @click="addToCart(product.id, product.num)">
+                <i class="fas"></i>
+                加到購物車
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- 單筆modal end  -->
-  </div>
+      <!-- 單筆Modal end -->
+
+      <!-- 底下購物車 -->
+      <button class="btn btn-primary cart" type="button" data-toggle="collapse" data-target="#collapseCartDialog"
+        aria-expanded="false" aria-controls="collapseCartDialog">
+        <i class="fas fa-shopping-cart"></i>
+      </button>
+
+      <div class="collapse" id="collapseCartDialog">
+
+        <div class="cart__list">
+     
+
+            <table class="table">
+              <thead>
+                <th></th>
+                <th>品名</th>
+                <th>數量</th>
+                <th>單價</th>
+              </thead>
+              <tbody>
+                <tr v-for="item in cart.carts" v-if="cart">
+                  <td class="align-middle">
+                    <button type="button" class="btn btn-outline-danger btn-sm" @click="removeCartItem(item.id)">
+                      <i class="far fa-trash-alt"></i>
+                    </button>
+                  </td>
+                  <td class="align-middle">
+                    {{ item.product.title }}
+                    <div class="text-success" v-if="item.coupon">
+                      已套用優惠券
+                    </div>
+                  </td>
+                  <td class="align-middle">{{ item.qty }}/{{ item.product.unit }}</td>
+                  <td class="align-middle text-right">{{ item.final_total }}</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="3" class="text-right">總計</td>
+                  <td class="text-right">{{ cart.total }}</td>
+                </tr>
+                <tr v-if=" cart.total !== cart.final_total">
+                  <td colspan="3" class="text-right text-success">折扣價</td>
+                  <td class="text-right text-success">{{ cart.final_total }}</td>
+                </tr>
+              </tfoot>
+            </table>
+
+            <div class="input-group mb-3 input-group-sm">
+              <input type="text" class="form-control" v-model="coupon_code" placeholder="請輸入優惠碼">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" @click="addCouponCode">
+                  套用優惠碼
+                </button>
+              </div>
+            </div>
+         
+        </div>
+
+      </div> <!-- 底下購物車 end -->
+
+    </div> <!-- 倒數第二層 -->
+
+    <cartDialog></cartDialog>
+  </div> <!-- 倒數第一層 -->
+
 </template>
 
 <style scoped>
@@ -108,9 +173,16 @@
 }
 </style>
 <script>
+$("#collapseCartDialog").click(function() {
+  if (this.listopen === false) {
+    this.listopen = true;
+  }
+});
 import $ from "jquery";
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState } from "vuex";
+import CartDialog from "@/components/pages/CartDialog";
 export default {
+  name: "productlist",
   data() {
     return {
       currentFilterStyle: "全部商品",
@@ -134,15 +206,18 @@ export default {
       coupon_code: ""
     };
   },
+  components: {
+    CartDialog
+  },
   computed: {
     filterProductArr: function() {
-      if (this.currentFilterStyle === '全部商品') {
+      if (this.currentFilterStyle === "全部商品") {
         return this.products;
-      } else  {
+      } else {
         return this.products.filter(item => {
           console.log(item);
-          return item.category === this.currentFilterStyle ;
-        })
+          return item.category === this.currentFilterStyle;
+        });
       }
     }
   },
@@ -262,3 +337,28 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.cart {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  &__list {
+    position: fixed;
+    bottom: 100px;
+    right: 0;
+    background: #fff;
+    padding: 10px;
+    width: 400px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+}
+.fa-shopping-cart:before {
+  font-size: 26px;
+}
+</style>
