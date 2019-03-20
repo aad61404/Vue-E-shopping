@@ -1,5 +1,5 @@
 <template>
     <div>
-     CartDialog 123546   
+     Carousel 123546   
     </div>
 </template>
