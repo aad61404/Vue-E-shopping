@@ -341,43 +341,13 @@ export default {
     changeFilterStyle(idx) {
       this.currentFilterStyle = this.filterStyleArr[idx];
     },
-    changeIndex(index) {
-      // 輪播圖
-      this.sliderValue = index;
-    }
+
   },
   created() {
     this.getProducts();
     this.getCart();
   },
-  mounted() {
-    setTimeout(
-      () =>
-        (this.list = [
-          {
-            backgroundColor: "#3f51b5",
-            width: "100%",
-            height: "100%"
-          },
-          {
-            backgroundColor: "#eee",
-            width: "100%",
-            height: "100%"
-          },
-          {
-            backgroundColor: "#f44336",
-            width: "100%",
-            height: "100%"
-          },
-          {
-            backgroundColor: "#eee",
-            width: "100%",
-            height: "100%"
-          }
-        ]),
-      1000
-    );
-  }
+
 };
 </script>
 
