@@ -256,6 +256,7 @@ export default {
       this.$http.get(api).then(response => {
         vm.product = response.data.product;
         $("#productModal").modal("show");
+         vm.product.num = 1;//多加了這行
         console.log("response:", response);
         vm.status.loadingItem = "";
       });
@@ -272,7 +273,7 @@ export default {
         qty
       };
       this.$http.post(api, { data: cart }).then(response => {
-        console.log("response:", response);
+        console.log(response);
         vm.status.loadingItem = "";
         vm.getCart();
         $("#productModal").modal("hide");
