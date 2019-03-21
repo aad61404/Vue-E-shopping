@@ -19,6 +19,9 @@ import Pagination from './components/Pagination'
 // import $ from 'jquery'
 import VeeValidate from 'vee-validate';
 import zhTWValidate from 'vee-validate/dist/locale/zh_TW';
+import EasySlider from 'vue-easy-slider';
+
+Vue.use(EasySlider)
 // Vue.use(VeeValidate);
 Vue.use(VeeValidate, {
   events: 'input|blur',
