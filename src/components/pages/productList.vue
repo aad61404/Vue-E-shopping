@@ -1,13 +1,7 @@
 <template>
   <div>
     <section>
-              <Slider animation="fade" v-model="sliderValue" :duration="5000" :speed="1000">
-          <SliderItem v-for="(i, index) in list" :key="index" @click="changeIndex(1);" :style="i">
-            <p style="line-height: 280px; font-size: 5rem; text-align: center;">
-              Page{{ index + 1 }}
-            </p>
-          </SliderItem>
-        </Slider>
+
       <Carousel>
 
       </Carousel>
@@ -190,7 +184,7 @@ $("#collapseCartDialog").click(function() {
     this.listopen = true;
   }
 });
-import { Slider, SliderItem } from "vue-easy-slider";
+
 import $ from "jquery";
 import { mapActions, mapState } from "vuex";
 import Carousel from "@/components/pages/Carousel";
@@ -198,9 +192,6 @@ export default {
   name: "productlist",
   data() {
     return {
-      list: [],
-      sliderValue: 2,
-
       currentFilterStyle: "全部商品",
       filterStyleArr: ["全部商品", "飲品", "漢堡", "三明治"],
       products: [],
@@ -220,17 +211,11 @@ export default {
       },
       cart: {},
       coupon_code: "",
-      list: [
-        { backgroundColor: "#3f51b5", width: "100%", height: "100%" },
-        { backgroundColor: "#eee", width: "100%", height: "100%" },
-        { backgroundColor: "#f44336", width: "100%", height: "100%" }
-      ]
+
     };
   },
   components: {
     Carousel,
-    Slider,
-    SliderItem
   },
   computed: {
     filterProductArr: function() {
@@ -356,7 +341,8 @@ export default {
     changeFilterStyle(idx) {
       this.currentFilterStyle = this.filterStyleArr[idx];
     },
-    changeIndex(index) { // 輪播圖
+    changeIndex(index) {
+      // 輪播圖
       this.sliderValue = index;
     }
   },
