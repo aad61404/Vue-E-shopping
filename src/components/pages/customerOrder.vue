@@ -221,7 +221,7 @@ export default {
         vm.product = response.data.product;
         // Object.assign(vm.product, {num: num});
         $("#productModal").modal("show");
-        console.log("response:", response);
+         vm.product.num = 1;//多加了這行
         vm.status.loadingItem = "";
       });
     },
