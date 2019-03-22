@@ -93,7 +93,7 @@
             <div class="modal-footer">
               <div class="text-muted text-nowrap mr-3">
                 小計
-                <strong>{{product.num*product.price}}</strong>
+                <strong v-if="product.num">{{product.num*product.price}}</strong>
               </div>
               <button type="button" class="btn btn-primary" @click="addToCart(product.id, product.num)">
                 <i class="fas"></i>
@@ -256,7 +256,7 @@ export default {
       this.$http.get(api).then(response => {
         vm.product = response.data.product;
         $("#productModal").modal("show");
-         vm.product.num = 1;//多加了這行
+        
         console.log("response:", response);
         vm.status.loadingItem = "";
       });

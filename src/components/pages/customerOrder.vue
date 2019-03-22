@@ -56,16 +56,16 @@
               <del class="h6" v-if="product.price">原價{{product.origin_price}}元</del>
               <div class="h5" v-if="product.price">現在只要{{product.price}}元</div>
             </div>
-            <select name class="form-control mt-3" v-model="product.num">
+            <select name class="form-control mt-3" v-model="product.qty">
               <option :value="num" v-for="num in 10" :key="num">選購{{ num }} {{ product.unit }}</option>
             </select>
           </div>
           <div class="modal-footer">
             <div class="text-muted text-nowrap mr-3">
               小計
-              <strong>{{product.num*product.price}}</strong>
+              <strong v-if="product.qty">{{product.qty*product.price}}</strong>
             </div>
-            <button type="button" class="btn btn-primary" @click="addToCart(product.id, product.num)">
+            <button type="button" class="btn btn-primary" @click="addToCart(product.id, product.qty)">
               <i class="fas"></i>
               加到購物車
             </button>
@@ -210,7 +210,7 @@ export default {
         vm.isLoading = false;
       });
     },
-    getProduct(id, num = 1) {
+    getProduct(id, qty = 1) {
       // 單筆資料有prodcut 沒有s
       let vm = this;
       const api = `${process.env.APIPATH}/api/${
@@ -221,7 +221,7 @@ export default {
         vm.product = response.data.product;
         // Object.assign(vm.product, {num: num});
         $("#productModal").modal("show");
-         vm.product.num = 1;//多加了這行
+        //  this.product.qty = 1;//多加了這行
         vm.status.loadingItem = "";
       });
     },
