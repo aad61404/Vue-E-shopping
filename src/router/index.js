@@ -14,16 +14,26 @@ export default new Router({
     //   name: 'Home',
     //   component: () => import('@/components/Home.vue'),
     // },
+    {
+      path: '/',
+      redirect: '/Introduce',
+    },
 
     {
       path: '*',
-      redirect: '/',
+      redirect: '/Introduce',
     },
     {
       path: '/',
       name: 'Home',
       component: () => import('@/components/Home.vue'),
       children: [
+        {
+          path: 'introduce',
+          name: 'Introduce',
+          component: () => import('@/components/pages/Introduce.vue'),
+        }
+        ,
         {
           path: 'product_list',
           name: 'ProductList',
