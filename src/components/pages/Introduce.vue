@@ -12,7 +12,7 @@
   <hr>
       <div class="row ">
         <div class="col-6">
-          <h3>你知道嗎....</h3>
+          <h3 style="text-align: left;">你知道嗎....</h3>
           <p>在北歐，工作再忙父母也至少要有一個人陪孩子吃早餐，這和中國家長給孩子塞上幾塊錢到外面買早點完全不一樣。對於一個家庭來說，一頓豐盛的早餐背後所蘊含的意味遠遠多於其本身的價值。</p>
         </div>
 
@@ -61,7 +61,7 @@
         </div>
         <div class="row">
           <div class="col-8">
-                   <p> 美味、新鮮、健康 </p>
+                   <h2> 美味、新鮮、健康 </h2>
             Fresh! Good Breakfast! お元気ですか
 
             吃早餐是一件簡單又幸福的事，一天的開始是在溫馨又好吃的早餐店裡渡
@@ -71,8 +71,8 @@
           <div class="col-4">
             <img class="pict_02" src="../../assets/home/want_to_eat.jpg" alt="">
             <ul>
-              <li>地址: XX市XX區XX路XX號</li>
-              <li>門市電話: 02-XXXX-XXXX</li>
+              <!-- <li>地址: XX市XX區XX路XX號</li>
+              <li>門市電話: 02-XXXX-XXXX</li> -->
      
             </ul>
 
